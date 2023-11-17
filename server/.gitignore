@@ -1,0 +1,5 @@
+.env
+
+/node_modules
+
+server/heliverse_mock_data.json
