@@ -83,8 +83,14 @@ export const getAllUsers = async (req, res, next) => {
     //Filter By Availability
     if (req.query.available !== undefined) {
       filters.available = req.query.available.toLowerCase() === "true";
-    } else {
-      filters.available = false;
+    }
+
+    //Search User By Name (Implement searching logic to search for users by their names)
+    if (req.query.first_name) {
+      filters.first_name = new RegExp(`^${req.query.first_name}$`, "i");
+    }
+    if (req.query.last_name) {
+      filters.last_name = new RegExp(`^${req.query.last_name}$`, "i");
     }
 
     //Get total user for counting total pages
