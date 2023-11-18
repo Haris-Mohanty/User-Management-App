@@ -1,23 +1,14 @@
 import userModel from "../models/userModel.js";
 
-//************ CREATE USER ****************/
+//************ CREATE A NEW USER ****************/
 export const createUser = async (req, res, next) => {
   try {
     //Destructure from body
-    const {
-      id,
-      first_name,
-      last_name,
-      email,
-      gender,
-      avatar,
-      domain,
-      available,
-    } = req.body;
+    const { first_name, last_name, email, gender, avatar, domain, available } =
+      req.body;
 
     //Validation
     if (
-      !id ||
       !first_name ||
       !last_name ||
       !email ||
@@ -39,14 +30,6 @@ export const createUser = async (req, res, next) => {
       });
     }
 
-    //Existing ID Check
-    const existingId = await userModel.findOne({ id });
-    if (existingId) {
-      return res.status(409).json({
-        message: "ID already exists. Please provide a unique ID!",
-      });
-    }
-
     //Existing Email Check
     const existingEmail = await userModel.findOne({ email });
     if (existingEmail) {
@@ -55,8 +38,20 @@ export const createUser = async (req, res, next) => {
       });
     }
 
+    const latestId = await userModel.findOne().sort({ id: -1 });
+    const nextId = latestId ? latestId.id + 1 : 1;
+
     //User create
-    const user = new userModel(req.body);
+    const user = new userModel({
+      id: nextId,
+      first_name,
+      last_name,
+      email,
+      gender,
+      avatar,
+      domain,
+      available,
+    });
     await user.save();
     return res.status(201).json({
       message: "User Created Successfully!",
@@ -70,7 +65,7 @@ export const createUser = async (req, res, next) => {
   }
 };
 
-//************ GET ALL USERS ****************/
+//************ RETRIEVE ALL USERS WITH PAGINATION SUPPORT ****************/
 export const getAllUsers = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 1;
@@ -112,3 +107,28 @@ export const getAllUsers = async (req, res, next) => {
     });
   }
 };
+
+//************* RETRIEVE A SPECIFIC USER BY ID ***********/
+export const getUser = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    const user = await userModel.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User Not Found!",
+      });
+    }
+
+    return res.status(200).json({
+      user,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Internal Server Error!",
+      error: err.message,
+    });
+  }
+};
+
+//****************** UPDATE AN EXISTING USER *************/
