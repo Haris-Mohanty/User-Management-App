@@ -36,7 +36,7 @@ export const createNewTeam = async (req, res, next) => {
     const uniqueDomains = new Set(getMember.map((member) => member.domain));
     const uniqueAvailabilities = new Set(
       getMember.map((member) => member.available)
-    );  
+    );
     if (
       uniqueDomains.size !== getMember.length ||
       uniqueAvailabilities.size !== 1
@@ -64,6 +64,32 @@ export const createNewTeam = async (req, res, next) => {
     return res.status(201).json({
       message: "Team created successfully!",
       team: newTeam,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Internal Server Error!",
+      error: err.message,
+    });
+  }
+};
+
+//*************** RETRIEVE THE DETAILS OF A SPECIFIC TEAM BY ID **************/
+export const getTeamById = async (req, res, next) => {
+  try {
+    const teamId = req.params.id;
+
+    const getTeamDetails = await teamModel.findById(teamId).populate("members");
+
+    //Validation
+    if (!getTeamDetails) {
+      return res.status(404).json({
+        message: "Team not found",
+      });
+    }
+
+    //Success
+    return res.status(200).json({
+      getTeamDetails,
     });
   } catch (err) {
     return res.status(500).json({
