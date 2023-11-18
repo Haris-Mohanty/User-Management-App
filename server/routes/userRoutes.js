@@ -3,6 +3,7 @@ import {
   createUser,
   getAllUsers,
   getUser,
+  updateUser,
 } from "../controllers/userController.js";
 
 //Router Object
@@ -18,5 +19,8 @@ router.get("/", getAllUsers);
 
 //Retrieve a specific user by id
 router.get("/:id", getUser);
+
+//Update an existing user
+router.put("/:id", updateUser);
 
 export default router;

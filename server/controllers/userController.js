@@ -8,15 +8,7 @@ export const createUser = async (req, res, next) => {
       req.body;
 
     //Validation
-    if (
-      !first_name ||
-      !last_name ||
-      !email ||
-      !gender ||
-      !avatar ||
-      !domain ||
-      !available
-    ) {
+    if (!first_name || !last_name || !email || !gender || !avatar || !domain) {
       return res.status(422).json({
         message: "Please provide all fields!",
       });
@@ -38,6 +30,7 @@ export const createUser = async (req, res, next) => {
       });
     }
 
+    //ID of user automatically added(latest one)
     const latestId = await userModel.findOne().sort({ id: -1 });
     const nextId = latestId ? latestId.id + 1 : 1;
 
@@ -132,3 +125,51 @@ export const getUser = async (req, res, next) => {
 };
 
 //****************** UPDATE AN EXISTING USER *************/
+export const updateUser = async (req, res, next) => {
+  try {
+    //Get id
+    const id = req.params.id;
+
+    const { first_name, last_name, email, gender, avatar, domain, available } =
+      req.body;
+
+    //Validation
+    if (!first_name || !last_name || !email || !gender || !avatar || !domain) {
+      return res.status(422).json({
+        message: "Please provide all fields!",
+      });
+    }
+
+    //Check user
+    const user = await userModel.findById(id);
+    if (!user) {
+      return res.status(404).json({
+        message: "User Not Found!",
+      });
+    }
+
+    // Check if the email is being updated to an existing email for another user
+    const existingEmail = await userModel.findOne({ email, _id: { $ne: id } });
+    if (existingEmail) {
+      return res.status(409).json({
+        message:
+          "Email already exists for another user. Please provide a unique Email!",
+      });
+    }
+
+    //Update user
+    const updatedUser = await userModel.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+
+    return res.status(200).json({
+      message: "User Updated Successfully!",
+      updatedUser,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Internal Server Error!",
+      error: err.message,
+    });
+  }
+};

@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   id: {
     type: Number,
-    unique: true,
   },
   first_name: {
     type: String,
