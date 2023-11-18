@@ -67,8 +67,28 @@ export const getAllUsers = async (req, res, next) => {
     //Calculate skip value
     const skip = (page - 1) * limit;
 
+    //Filter
+    const filters = {};
+
+    //Filter By Domain
+    if (req.query.domain) {
+      filters.domain = new RegExp(req.query.domain, "i");
+    }
+
+    //Filter By Gender
+    if (req.query.gender) {
+      filters.gender = new RegExp(`^${req.query.gender}$`, "i");
+    }
+
+    //Filter By Availability
+    if (req.query.available !== undefined) {
+      filters.available = req.query.available.toLowerCase() === "true";
+    } else {
+      filters.available = false;
+    }
+
     //Get total user for counting total pages
-    const totalUser = await userModel.countDocuments();
+    const totalUser = await userModel.countDocuments(filters);
     const totalPages = Math.ceil(totalUser / limit);
     if (page > totalPages) {
       return res.status(404).json({
@@ -77,7 +97,7 @@ export const getAllUsers = async (req, res, next) => {
     }
 
     //Find users by pagination
-    const users = await userModel.find().skip(skip).limit(limit);
+    const users = await userModel.find(filters).skip(skip).limit(limit);
 
     //Validation
     if (!users || users.length === 0) {
