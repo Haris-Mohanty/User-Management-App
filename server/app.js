@@ -4,7 +4,8 @@ import dotenv from "dotenv";
 import colors from "colors";
 import morgan from "morgan";
 import connectDB from "./database/db.js";
-import userRoutes from './routes/userRoutes.js'
+import userRoutes from "./routes/userRoutes.js";
+import teamRoutes from "./routes/teamRoutes.js";
 
 //****** DOTENV CONFIGURATION *****/
 dotenv.config();
@@ -21,8 +22,8 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 //******** MIDDLEWARE ROUTES ********/
-app.use("/api/users", userRoutes)
-
+app.use("/api/users", userRoutes);
+app.use("/api/team", teamRoutes);
 
 //******** PORT *******/
 const port = process.env.PORT || 8080;

@@ -58,7 +58,7 @@ export const createUser = async (req, res, next) => {
   }
 };
 
-//************ RETRIEVE ALL USERS WITH PAGINATION SUPPORT ****************/
+//************ RETRIEVE ALL USERS WITH PAGINATION SUPPORT(FILTER, SEARCH) ****************/
 export const getAllUsers = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 1;

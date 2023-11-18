@@ -35,6 +35,12 @@ const userSchema = new mongoose.Schema({
     default: false,
     required: true,
   },
+  team: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Team",
+    },
+  ],
 });
 
 export default mongoose.model("User", userSchema);
