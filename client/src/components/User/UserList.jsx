@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import UserCard from "./UserCard";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
 import SearchUser from "./SearchUser";
 import Filter from "../Filter";
 
 const UserList = ({ users, onFilterChange }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
+  //Responsive design
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  //Search query
   const handleSearch = (query) => {
     setSearchQuery(query);
   };
@@ -20,7 +25,14 @@ const UserList = ({ users, onFilterChange }) => {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", justifyContent: "space-around", mt: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: isSmallScreen ? "column" : "row",
+          justifyContent: "space-evenly",
+          mt: 5,
+        }}
+      >
         <SearchUser onSearch={handleSearch} />
         <Filter onFilterChange={onFilterChange} />
       </Box>
@@ -29,7 +41,7 @@ const UserList = ({ users, onFilterChange }) => {
           display: "flex",
           flexWrap: "wrap",
           justifyContent: "center",
-          mt: 3,
+          mt: 2,
         }}
       >
         {filterUser.length === 0 ? (

@@ -7,11 +7,12 @@ const SearchUser = ({ onSearch }) => {
     onSearch(query);
   };
   return (
-    <Box sx={{ p: 1 }}>
+    <Box sx={{ p: 1, display: "flex", justifyContent: "center" }}>
       <TextField
         label="Search By Name"
         variant="outlined"
         onChange={handleSearch}
+        sx={{width:340}}
       />
     </Box>
   );

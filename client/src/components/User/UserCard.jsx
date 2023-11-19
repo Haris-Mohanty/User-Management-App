@@ -14,7 +14,7 @@ const UserCard = ({ user }) => {
     <Card
       sx={{
         margin: 1,
-        width: 250,
+        width: 265,
         height: 290,
         borderRadius: 3,
         ":hover": {
@@ -30,7 +30,7 @@ const UserCard = ({ user }) => {
             src={user.avatar}
             sx={{
               height: "18%",
-              width: "27%",
+              width: "25%",
               backgroundColor: "#4caf50",
               transition: "opacity 0.2s ease-in-out",
               ":hover": { opacity: 0.8 },
@@ -38,7 +38,7 @@ const UserCard = ({ user }) => {
           />
           <Typography
             gutterBottom
-            variant="h6"
+            variant="h5"
             component="div"
             fontWeight={"bold"}
           >
@@ -47,7 +47,7 @@ const UserCard = ({ user }) => {
         </Box>
         <Typography
           gutterBottom
-          variant="body2"
+          variant="subtitle2"
           component="div"
           display={"flex"}
           justifyContent={"center"}
@@ -60,6 +60,7 @@ const UserCard = ({ user }) => {
           component="div"
           display={"flex"}
           justifyContent={"center"}
+          sx={{color:"maroon"}}
         >
           Name: {`${user.first_name} ${user.last_name}`}
         </Typography>
@@ -70,8 +71,8 @@ const UserCard = ({ user }) => {
           <Typography gutterBottom variant="body2" component="div">
             Domain: {user.domain}
           </Typography>
-          <Typography gutterBottom variant="body2" component="div">
-            Available: {user.available ? "Yes" : "No"}
+          <Typography gutterBottom variant="body2" component="div" sx={{color:"magenta"}}>
+            {user.available ? "Available" : "Not Available"}
           </Typography>
         </Box>
       </CardContent>

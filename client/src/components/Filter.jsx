@@ -1,4 +1,12 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import React, { useState } from "react";
 
 const Filter = ({ onFilterChange }) => {
@@ -6,32 +14,42 @@ const Filter = ({ onFilterChange }) => {
   const [gender, setGender] = useState("");
   const [availability, setAvailability] = useState("");
 
+  //Responsive
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  //ONCHANGE FUNCTION DOR DOMAIN
   const handleDomainChange = (event) => {
     const value = event.target.value;
     setDomain(value);
     handleFilterChange("domain", value);
   };
 
+  //ONCHANGE FUNCTION DOR GENDER
   const handleGenderChange = (event) => {
     const value = event.target.value;
     setGender(value);
     handleFilterChange("gender", value);
   };
 
+  //ONCHANGE FUNCTION DOR AVAILABILITY
   const handleAvailabilityChange = (event) => {
     const value = event.target.value;
     setAvailability(value);
     handleFilterChange("available", value);
   };
 
+  //ONCHANGE FUNCTION DOR FILTER
   const handleFilterChange = (filter, value) => {
     onFilterChange(filter, value);
   };
   return (
     <>
-      <Box>
+      <Box display={"flex"} justifyContent={"center"}>
         {/********* DOMAIN ********/}
-        <FormControl sx={{ minWidth: 120, m: 1 }}>
+        <FormControl
+          sx={{ minWidth: isSmallScreen ? 100 : 120, margin: "5px" }}
+        >
           <InputLabel id="domain">Domain</InputLabel>
           <Select
             labelId="domain"
@@ -51,7 +69,9 @@ const Filter = ({ onFilterChange }) => {
         </FormControl>
 
         {/********* GENDER ********/}
-        <FormControl sx={{ minWidth: 120, m: 1 }}>
+        <FormControl
+          sx={{ minWidth: isSmallScreen ? 100 : 120, margin: "5px" }}
+        >
           <InputLabel id="gender">Gender</InputLabel>
           <Select
             labelId="gender"
@@ -71,7 +91,7 @@ const Filter = ({ onFilterChange }) => {
         </FormControl>
 
         {/********* AVAILABILITY ********/}
-        <FormControl sx={{ minWidth: 120, m: 1 }}>
+        <FormControl sx={{ minWidth: 120, margin: "5px" }}>
           <InputLabel id="availability">Availability</InputLabel>
           <Select
             labelId="availability"
