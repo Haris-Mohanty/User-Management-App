@@ -1,9 +1,14 @@
 import axios from "axios";
 
 /***************** GET USER *********************/
-export const fetchUser = async (currentPage) => {
+export const fetchUser = async (page, filters) => {
   try {
-    const response = await axios.get(`/users?page=${currentPage}`);
+    const response = await axios.get("/users", {
+      params: {
+        page,
+        ...filters,
+      },
+    });
 
     // Check the status of the response
     if (response.status === 200) {

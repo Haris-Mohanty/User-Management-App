@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import UserCard from "./UserCard";
 import { Box, Typography } from "@mui/material";
 import SearchUser from "./SearchUser";
+import Filter from "../Filter";
 
-const UserList = ({ users }) => {
+const UserList = ({ users, onFilterChange }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const handleSearch = (query) => {
     setSearchQuery(query);
   };
 
-  //Filter user
+  //Search by name
   const filterUser = users.filter(
     (user) =>
       user.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -19,8 +20,9 @@ const UserList = ({ users }) => {
 
   return (
     <Box>
-      <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-around", mt: 4 }}>
         <SearchUser onSearch={handleSearch} />
+        <Filter onFilterChange={onFilterChange} />
       </Box>
       <Box
         sx={{
@@ -31,7 +33,7 @@ const UserList = ({ users }) => {
         }}
       >
         {filterUser.length === 0 ? (
-          <Typography variant="subtitle1" color="textSecondary" mt={8} mb={39}>
+          <Typography variant="subtitle1" color="textSecondary" mt={8} mb={40}>
             No names found.
           </Typography>
         ) : (
