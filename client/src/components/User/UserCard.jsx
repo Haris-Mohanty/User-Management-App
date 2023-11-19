@@ -15,7 +15,7 @@ const UserCard = ({ user }) => {
       sx={{
         margin: 1,
         width: 250,
-        height: 270,
+        height: 290,
         borderRadius: 3,
         ":hover": {
           boxShadow:
@@ -53,6 +53,15 @@ const UserCard = ({ user }) => {
           justifyContent={"center"}
         >
           Email: {user.email}
+        </Typography>
+        <Typography
+          gutterBottom
+          variant="body2"
+          component="div"
+          display={"flex"}
+          justifyContent={"center"}
+        >
+          Name: {`${user.first_name} ${user.last_name}`}
         </Typography>
         <Typography gutterBottom variant="body2" component="div" sx={{ ml: 6 }}>
           Gender: {user.gender}
