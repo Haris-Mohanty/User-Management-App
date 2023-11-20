@@ -102,10 +102,10 @@ export const getTeamById = async (req, res, next) => {
 //*************** RETRIEVE THE DETAILS OF ALL TEAM **************/
 export const getAllTeam = async (req, res, next) => {
   try {
-    const getTeams = await teamModel.find().populate("members");
+    const getAllTeams = await teamModel.find().populate("members");
 
     //Validation
-    if (!getTeams) {
+    if (!getAllTeams) {
       return res.status(404).json({
         message: "Team not found",
       });
@@ -113,7 +113,7 @@ export const getAllTeam = async (req, res, next) => {
 
     //Success
     return res.status(200).json({
-      getTeams,
+      getAllTeams,
     });
   } catch (err) {
     return res.status(500).json({
