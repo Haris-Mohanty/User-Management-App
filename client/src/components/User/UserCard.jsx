@@ -14,7 +14,6 @@ const UserCard = ({ user, setSelectedUsers }) => {
 
   // ADD TO TEAM BUTTON || REMOVE FROM TEAM
   const handleAddToTeam = () => {
-    
     setIsSelected(!isSelected);
     setSelectedUsers((prevSelected) =>
       isSelected
@@ -35,7 +34,9 @@ const UserCard = ({ user, setSelectedUsers }) => {
         width: 265,
         height: 290,
         borderRadius: 3,
+        transition: "transform 0.2s ease-in-out",
         ":hover": {
+          transform: "scale(1.02)",
           boxShadow:
             "rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px",
         },
@@ -110,8 +111,6 @@ const UserCard = ({ user, setSelectedUsers }) => {
           sx={{ m: "auto" }}
           size="small"
           onClick={handleAddToTeam}
-          
-          
         >
           {isSelected ? "Remove from Team" : "Add to Team"}
         </Button>
