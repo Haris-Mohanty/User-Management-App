@@ -10,8 +10,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<ShowUser />} />
+        <Route path="/team" element={<TeamDetails />} />
       </Routes>
-      <TeamDetails/>
       <Footer />
     </>
   );

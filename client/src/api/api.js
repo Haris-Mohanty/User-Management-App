@@ -40,3 +40,19 @@ export const createTeam = async (teamName, memberIds) => {
     throw err;
   }
 };
+
+// ****************** SHOW TEAM DETAILS ******************/
+export const fetchTeamDetails = async () => {
+  try {
+    const response = await axios.get("/team");
+
+    if (response.status === 200) {
+      const resData = await response.data;
+      return resData;
+    } else {
+      throw new Error("Unexcepted error occured!");
+    }
+  } catch (err) {
+    throw err;
+  }
+};

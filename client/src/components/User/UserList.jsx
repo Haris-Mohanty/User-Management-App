@@ -11,6 +11,7 @@ import SearchUser from "./SearchUser";
 import Filter from "../Filter";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import Groups2Icon from "@mui/icons-material/Groups2";
+import { Link } from "react-router-dom";
 
 const UserList = ({ users, onFilterChange, setSelectedUsers, onIconClick }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,15 +41,17 @@ const UserList = ({ users, onFilterChange, setSelectedUsers, onIconClick }) => {
         }}
       >
         <SearchUser onSearch={handleSearch} />
-        <Box sx={{ display: "flex", mx: isSmallScreen ? 8 : 1, my: 1 }}>
+        <Box sx={{ display: "flex", mx: isSmallScreen ? 8 : 1, my: 2 }}>
           <IconButton onClick={onIconClick}>
             <GroupAddIcon sx={{ fontSize: 24 }} />
             <Typography variant="body2">Create Team</Typography>
           </IconButton>
-          <IconButton>
-            <Groups2Icon sx={{ fontSize: 25 }} />
-            <Typography variant="body2">Show Team</Typography>
-          </IconButton>
+          <Link to={"/team"}>
+            <IconButton>
+              <Groups2Icon sx={{ fontSize: 25 }} />
+              <Typography variant="body2">Show Team</Typography>
+            </IconButton>
+          </Link>
         </Box>
         <Filter onFilterChange={onFilterChange} />
       </Box>
