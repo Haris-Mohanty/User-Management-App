@@ -1,22 +1,27 @@
 import React, { useState } from "react";
 import UserCard from "./UserCard";
-import { Box, Typography, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import SearchUser from "./SearchUser";
 import Filter from "../Filter";
+import AddBoxSharpIcon from "@mui/icons-material/AddBoxSharp";
 
-const UserList = ({ users, onFilterChange }) => {
+const UserList = ({ users, onFilterChange, setSelectedUsers, onIconClick }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
-  //Responsive design
+  //FOR RESPONSIVE
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  //Search query
+  //SEARCH BY NAME QUERY
   const handleSearch = (query) => {
     setSearchQuery(query);
   };
-
-  //Search by name
   const filterUser = users.filter(
     (user) =>
       user.first_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -30,12 +35,17 @@ const UserList = ({ users, onFilterChange }) => {
           display: "flex",
           flexDirection: isSmallScreen ? "column" : "row",
           justifyContent: "space-evenly",
-          mt: 5,
+          mt: 10,
         }}
       >
         <SearchUser onSearch={handleSearch} />
+        <IconButton onClick={onIconClick}>
+          <AddBoxSharpIcon sx={{ fontSize: 29 }} />
+          <Typography variant="body2">Create Team</Typography>
+        </IconButton>
         <Filter onFilterChange={onFilterChange} />
       </Box>
+      {/********* USER SHOW IN CARDS ********/}
       <Box
         sx={{
           display: "flex",
@@ -49,7 +59,13 @@ const UserList = ({ users, onFilterChange }) => {
             No names found.
           </Typography>
         ) : (
-          filterUser.map((user) => <UserCard key={user._id} user={user} />)
+          filterUser.map((user) => (
+            <UserCard
+              key={user._id}
+              user={user}
+              setSelectedUsers={setSelectedUsers}
+            />
+          ))
         )}
       </Box>
     </Box>

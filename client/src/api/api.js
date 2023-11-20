@@ -1,6 +1,6 @@
 import axios from "axios";
 
-/***************** GET USER *********************/
+// ***************** GET USER *********************/
 export const fetchUser = async (page, filters) => {
   try {
     const response = await axios.get("/users", {
@@ -15,13 +15,28 @@ export const fetchUser = async (page, filters) => {
       const userData = response.data;
       return userData;
     } else {
-      // Handle unexpected status codes
-      console.error("Unexpected Error Occurred:", response.statusText);
-      return null;
+      throw new Error("Unexcepted error occured!");
     }
-  } catch (error) {
-    // Handle network or other errors
-    console.error("Error Occurred:", error.message);
-    return null;
+  } catch (err) {
+    throw err;
+  }
+};
+
+// ******************** CREATE TEAM ***************/
+export const createTeam = async (teamName, memberIds) => {
+  try {
+    const response = await axios.post("/team", {
+      teamName: teamName,
+      memberIds: memberIds,
+    });
+
+    if (response.status === 201) {
+      const resData = await response.data;
+      return resData;
+    } else {
+      throw new Error("Unexcepted error occured!");
+    }
+  } catch (err) {
+    throw err;
   }
 };

@@ -7,9 +7,9 @@ export const createNewTeam = async (req, res, next) => {
     const { teamName, memberIds } = req.body;
 
     //Validation
-    if (!teamName || !memberIds) {
+    if (!teamName) {
       return res.status(422).json({
-        message: "Please provide all fields!",
+        message: "Please add Team Name!",
       });
     }
 

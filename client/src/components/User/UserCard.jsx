@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Avatar,
   Box,
@@ -9,7 +9,24 @@ import {
   Typography,
 } from "@mui/material";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, setSelectedUsers }) => {
+  const [isSelected, setIsSelected] = useState(false);
+
+  // ADD TO TEAM BUTTON || REMOVE FROM TEAM
+  const handleAddToTeam = () => {
+    setIsSelected(!isSelected);
+    setSelectedUsers((prevSelected) =>
+      isSelected
+        ? prevSelected.filter((userId) => userId !== user._id)
+        : [...prevSelected, user._id]
+    );
+  };
+
+  //Available color change dynamically
+  const getStatusColor = () => {
+    return user.available ? "#00FF33" : "#FF0000";
+  };
+
   return (
     <Card
       sx={{
@@ -60,7 +77,7 @@ const UserCard = ({ user }) => {
           component="div"
           display={"flex"}
           justifyContent={"center"}
-          sx={{color:"maroon"}}
+          sx={{ color: "magenta" }}
         >
           Name: {`${user.first_name} ${user.last_name}`}
         </Typography>
@@ -71,7 +88,12 @@ const UserCard = ({ user }) => {
           <Typography gutterBottom variant="body2" component="div">
             Domain: {user.domain}
           </Typography>
-          <Typography gutterBottom variant="body2" component="div" sx={{color:"magenta"}}>
+          <Typography
+            gutterBottom
+            variant="body2"
+            component="div"
+            sx={{ color: getStatusColor(), fontWeight: "bold" }}
+          >
             {user.available ? "Available" : "Not Available"}
           </Typography>
         </Box>
@@ -82,8 +104,9 @@ const UserCard = ({ user }) => {
           color="info"
           sx={{ m: "auto" }}
           size="small"
+          onClick={handleAddToTeam}
         >
-          Add to Team
+          {isSelected ? "Remove from Team" : "Add to Team"}
         </Button>
       </CardActions>
     </Card>

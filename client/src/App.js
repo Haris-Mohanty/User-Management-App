@@ -1,15 +1,17 @@
-import "./App.css";
+import { Route, Routes } from "react-router-dom";
 import Footer from "./components/Home/Footer";
 import Header from "./components/Home/Header";
 import ShowUser from "./components/ShowUser";
 
 function App() {
   return (
-    <div>
+    <>
       <Header />
-      <ShowUser />
+      <Routes>
+        <Route path="/" element={<ShowUser />} />
+      </Routes>
       <Footer />
-    </div>
+    </>
   );
 }
 
