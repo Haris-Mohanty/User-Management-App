@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 
 const TeamForm = ({ selectedUsers, onCreateTeam, isOpen, onClose }) => {
   const [teamName, setTeamName] = useState("");
@@ -23,9 +23,14 @@ const TeamForm = ({ selectedUsers, onCreateTeam, isOpen, onClose }) => {
     <Dialog open={isOpen} onClose={onClose}>
       <Box p={3}>
         <DialogTitle sx={{ textAlign: "center" }}>
-          <Typography>Create Team</Typography>
+          <Typography
+            sx={{ fontFamily: "verdana", fontWeight: "bold", fontSize: 23 }}
+          >
+            Create Team
+          </Typography>
         </DialogTitle>
-        <Box mb={3}>
+        <hr />
+        <Box mb={3} mt={1}>
           <Typography variant="subtitle1" mb={2}>
             Selected Users:
           </Typography>
@@ -40,7 +45,7 @@ const TeamForm = ({ selectedUsers, onCreateTeam, isOpen, onClose }) => {
                 }}
               >
                 <Avatar sx={{ marginRight: "8px" }}>
-                  <AccountCircleIcon sx={{ fontSize: 23 }} />
+                  <GroupAddIcon sx={{ fontSize: 23 }} />
                 </Avatar>
                 <Typography variant="body1">{userId}</Typography>
               </li>

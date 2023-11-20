@@ -98,3 +98,27 @@ export const getTeamById = async (req, res, next) => {
     });
   }
 };
+
+//*************** RETRIEVE THE DETAILS OF ALL TEAM **************/
+export const getAllTeam = async (req, res, next) => {
+  try {
+    const getTeams = await teamModel.find().populate("members");
+
+    //Validation
+    if (!getTeams) {
+      return res.status(404).json({
+        message: "Team not found",
+      });
+    }
+
+    //Success
+    return res.status(200).json({
+      getTeams,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Internal Server Error!",
+      error: err.message,
+    });
+  }
+};

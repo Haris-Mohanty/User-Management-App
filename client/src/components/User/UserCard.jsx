@@ -75,13 +75,17 @@ const UserCard = ({ user, setSelectedUsers }) => {
           gutterBottom
           variant="body2"
           component="div"
-          display={"flex"}
-          justifyContent={"center"}
+          textAlign={"center"}
           sx={{ color: "magenta" }}
         >
           Name: {`${user.first_name} ${user.last_name}`}
         </Typography>
-        <Typography gutterBottom variant="body2" component="div" sx={{ ml: 6 }}>
+        <Typography
+          gutterBottom
+          variant="body2"
+          component="div"
+          textAlign={"center"}
+        >
           Gender: {user.gender}
         </Typography>
         <Box display={"flex"} justifyContent={"space-around"}>
